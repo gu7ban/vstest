@@ -1,4 +1,5 @@
 ﻿using System;
+
 public class Student
 {
     private static int _idCounter = 1;
@@ -10,31 +11,39 @@ public class Student
     {
         if (string.IsNullOrEmpty(fullname))
         {
-            Console.WriteLine("Xeta: Fullname bos ola bilmez.");
-            return;
+            throw new ArgumentException("Fullname cannot be null or empty.");
         }
-        if(point < 0 || point > 100)
+        if (point < 0 || point > 100)
         {
-            Console.WriteLine("Xeta: Point 0 ile 100 arasinda olmalidir.");
-            return ;
+            throw new ArgumentOutOfRangeException("Point must be between 0 and 100.");
         }
-        Id=_idCounter++;
-        Fullname=fullname;
-        Point=point;
+
+        Id = _idCounter++;
+        Fullname = fullname;
+        Point = point;
     }
     public void StudentInfo()
     {
-        Console.WriteLine("Id: "+Id+" Fullname: "+Fullname+" Point: "+Point);
+        Console.WriteLine($"Id: {Id} | Fullname: {Fullname} | Point: {Point}");
     }
 }
+
 public class Task3
 {
     public static void Main()
     {
-        var student1 = new Student("Celal Abbasov", 65);
-
-        var student2 = new Student("Abbas Elekberov", 78);
-
-        var student3 = new Student("Mehdi Firuddinzade", 96);
+        try
+        {
+            var student1 = new Student("Celal Abbasov", 65);
+            var student2 = new Student("Abbas Elekberov", 78);
+            var student3 = new Student("Mehdi Firuddinzade", 96);
+            student1.StudentInfo();
+            student2.StudentInfo();
+            student3.StudentInfo();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
     }
 }
